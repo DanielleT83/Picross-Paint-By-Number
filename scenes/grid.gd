@@ -32,15 +32,21 @@ func create_button(pos:Vector2):
 	var button = TextureButton.new()
 	button.toggle_mode = true
 	button.texture_normal = preload("res://assets/tile_empty.png")
-	button.texture_pressed = preload("res://assets/tile_filled.png")
-	#button.expand_icon = true
 	button.custom_minimum_size = Vector2(42, 42)
 	
-	button.pressed.connect(_on_button_pressed.bind(pos))
+	button.pressed.connect(_on_button_left_pressed.bind(button,pos))
+	button.gui_input.connect(_on_button_gui_input.bind(button, pos))
 	
 	grid.add_child(button)
 	return button
-
-func _on_button_pressed(pos: Vector2):
 	
+func _on_button_left_pressed(button: TextureButton, pos: Vector2):
+	button.texture_pressed = preload("res://assets/tile_filled.png")
 	selected_button = pos
+
+func _on_button_gui_input(event: InputEvent, button: TextureButton, pos: Vector2):
+	if event is InputEventMouseButton and event.pressed:
+		if event.is_action_pressed("right_click"):
+			button.texture_pressed = preload("res://assets/tile_x.png")
+			button.button_pressed = not button.button_pressed
+		selected_button = pos
