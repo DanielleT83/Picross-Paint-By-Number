@@ -1,8 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://fupj8m67cjv5"]
+[gd_scene load_steps=7 format=3 uid="uid://fupj8m67cjv5"]
 
 [ext_resource type="Script" uid="uid://bvhjlce0r55n3" path="res://scripts/title_screen.gd" id="1_73n4j"]
 [ext_resource type="Texture2D" uid="uid://bo572ijbp60tu" path="res://assets/background TEMP.png" id="2_5hkjy"]
 [ext_resource type="Texture2D" uid="uid://b7spfbaje32j1" path="res://assets/Start Button.png" id="2_olc8q"]
+[ext_resource type="Texture2D" uid="uid://bty2uu1xa4woy" path="res://assets/start_button_press.png" id="4_x3emf"]
+[ext_resource type="Texture2D" uid="uid://30bsbg00l4oj" path="res://assets/start_button_hover.png" id="5_tkrqk"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqjbv"]
 bg_color = Color(0.003921569, 0.003921569, 0.003921569, 0)
@@ -51,5 +53,7 @@ offset_bottom = 62.039978
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("2_olc8q")
+texture_pressed = ExtResource("4_x3emf")
+texture_hover = ExtResource("5_tkrqk")
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]

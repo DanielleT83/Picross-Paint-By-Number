@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://dewhxvreooulc"]
+
+[ext_resource type="Script" uid="uid://h40x1ivvvgld" path="res://data/level_data.gd" id="1_nppek"]
+
+[resource]
+script = ExtResource("1_nppek")
+grid_width = 10
+grid_height = 10
+solution = [[0, 0, 0, 0, 0, 0, 0, 0, 0, 0], [0, 0, 1, 0, 0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 0, 0, 0, 0, 0, 0], [0, 1, 1, 1, 0, 0, 0, 1, 0, 0], [1, 1, 1, 1, 1, 0, 1, 1, 1, 0], [1, 1, 1, 1, 1, 0, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1, 0, 1, 1, 1], [1, 1, 1, 1, 1, 1, 1, 0, 1, 1], [1, 1, 1, 1, 1, 1, 1, 1, 0, 1], [1, 1, 1, 1, 1, 1, 1, 1, 1, 0]]
+row_clues = [[], [1], [3], [3, 1], [5, 3], [5, 4], [6, 3], [7, 2], [8, 1], [9]]
+column_clues = [[6], [8], [9], [8], [6], [4], [2, 3], [4, 2], [4, 1], [4]]
+metadata/_custom_type_script = "uid://h40x1ivvvgld"
