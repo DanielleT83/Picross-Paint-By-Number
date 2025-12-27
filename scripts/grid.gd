@@ -2,19 +2,21 @@ extends Node2D
 
 @onready var grid:GridContainer = $GridContainer
 
-const grid_size = 15
+var grid_size: int
 var game_grid = []
 
 var selected_button:Vector2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	init_game()
-
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
 	pass
+
+func setup_grid(level_data: LevelData):
+	grid_size = level_data.grid_width
 
 func init_game():
 	grid.columns = grid_size

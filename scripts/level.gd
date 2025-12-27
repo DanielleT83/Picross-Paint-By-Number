@@ -3,6 +3,8 @@ extends Control
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
+	$Grid.setup_grid(Global.current_level_data)
+	$Grid.init_game()
 	$Grid.show()
 
 

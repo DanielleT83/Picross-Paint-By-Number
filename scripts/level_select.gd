@@ -2,6 +2,9 @@ extends Control
 
 @onready var grid:GridContainer = $GridContainer
 
+@export var level_scene: PackedScene
+@export var levels: Array[LevelData]
+
 const grid_length = 3
 const grid_height = 2
 var levels_grid = []
@@ -10,11 +13,11 @@ var level_num_counter = 1
 
 var level_button_size = 210
 
+#signal current_level(level)
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	init_grid()
-
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -57,6 +60,9 @@ func create_button(pos:Vector2):
 	return button
 	
 
-func _on_button_pressed(_level: int):
-	
+func _on_button_pressed(level: int):
+	level -= 1
+	Global.current_level_data = levels[level]
 	get_tree().change_scene_to_file("res://scenes/level.tscn")
+	
+	#current_level.emit(level)
