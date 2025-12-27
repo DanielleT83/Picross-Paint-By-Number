@@ -64,5 +64,3 @@ func _on_button_pressed(level: int):
 	level -= 1
 	Global.current_level_data = levels[level]
 	get_tree().change_scene_to_file("res://scenes/level.tscn")
-	
-	#current_level.emit(level)
