@@ -2,14 +2,13 @@
 
 [ext_resource type="Script" uid="uid://c1smirhtxyy43" path="res://scripts/grid.gd" id="1_lg4wi"]
 
-[node name="Grid" type="Node2D"]
+[node name="Grid" type="Control"]
+layout_mode = 3
+anchors_preset = 0
 script = ExtResource("1_lg4wi")
 
 [node name="GridContainer" type="GridContainer" parent="."]
-offset_left = 638.0
-offset_top = 218.0
-offset_right = 678.0
-offset_bottom = 258.0
+layout_mode = 0
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/h_separation = 0

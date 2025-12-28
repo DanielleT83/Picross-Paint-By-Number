@@ -1,11 +1,12 @@
 extends Control
 
+@onready var grid = $CenterContainer/Grid
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$Grid.setup_puzzle(Global.current_level_data)
-	$Grid.init_game()
-	$Grid.show()
+	grid.setup_puzzle(Global.current_level_data)
+	grid.init_game()
+	grid.show()
 
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

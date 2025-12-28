@@ -1,6 +1,8 @@
-extends Node2D
+extends Control
 
 @onready var grid:GridContainer = $GridContainer
+enum CellState {EMPTY, FILLED, MARKED}
+
 
 var grid_size: int
 var column_clues: Array
@@ -8,7 +10,6 @@ var row_clues: Array
 var puzzle_solution: Array
 
 var game_grid = []
-var puzzle_state = []
 
 var selected_button:Vector2
 
@@ -18,8 +19,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	pass
-	#check_puzzle()
+	check_puzzle()
 
 func setup_puzzle(level_data: LevelData):
 	grid_size = level_data.grid_width
@@ -30,6 +30,8 @@ func setup_puzzle(level_data: LevelData):
 func init_game():
 	grid.columns = grid_size
 	_populate_grid()
+	
+	custom_minimum_size = Vector2(grid_size * 42, grid_size * 42)
 
 func _populate_grid():
 	game_grid = []
@@ -42,6 +44,7 @@ func _populate_grid():
 	for i in range(grid_size):
 		add_child(create_clue(row_clues[i], "row", i))
 		add_child(create_clue(column_clues[i], "column", i))
+	
 
 
 func create_button(pos:Vector2):
@@ -49,6 +52,8 @@ func create_button(pos:Vector2):
 	button.toggle_mode = true
 	button.texture_normal = preload("res://assets/tile_empty.png")
 	button.custom_minimum_size = Vector2(42, 42)
+	
+	button.set_meta("state", CellState.EMPTY)
 	
 	button.pressed.connect(_on_button_left_pressed.bind(button,pos))
 	button.gui_input.connect(_on_button_gui_input.bind(button, pos))
@@ -83,6 +88,7 @@ func create_clue(clue_text, clue_type:String, pos:int):
 
 func _on_button_left_pressed(button: TextureButton, pos: Vector2):
 	button.texture_pressed = preload("res://assets/tile_filled.png")
+	button.set_meta("state", CellState.FILLED)
 	selected_button = pos
 
 func _on_button_gui_input(event: InputEvent, button: TextureButton, pos: Vector2):
@@ -90,28 +96,21 @@ func _on_button_gui_input(event: InputEvent, button: TextureButton, pos: Vector2
 		if event.is_action_pressed("right_click"):
 			button.texture_pressed = preload("res://assets/tile_x.png")
 			button.button_pressed = not button.button_pressed
+			button.set_meta("state", CellState.MARKED)
 		selected_button = pos
 
 #check
-#func check_puzzle():
-	#for row in game_grid:
-		#var current_row = []
-		#for column in row:
-			#if column.texture_pressed == "res://assets/tile_filled.png" and column.pressed == true:
-				#current_row.append(1)
-			#else:
-				#current_row.append(0)
-		#puzzle_state.append(current_row)
-	#
-	#var puzzle_check_counter = 1
-	#
-	#for index in game_grid:
-		#for row in puzzle_solution:
-			#if index != row:
-				#break
-			#else:
-				#puzzle_check_counter += 1
-	#
-	#if puzzle_check_counter == grid_size:
-		#pass
-		##puzzle is solved correctly
+func check_puzzle():
+	var puzzle_state = []
+	
+	for row in game_grid:
+		var current_row = []
+		for cell in row:
+			if cell.get_meta("state") == CellState.FILLED and cell.button_pressed == true:
+				current_row.append(1)
+			else:
+				current_row.append(0)
+		puzzle_state.append(current_row)
+	
+	if puzzle_state == puzzle_solution:
+		pass

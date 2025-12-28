@@ -4,4 +4,9 @@
 
 [resource]
 script = ExtResource("1_557mc")
+grid_width = 2
+grid_height = 2
+solution = [[0, 1], [0, 1]]
+row_clues = [[1], [1]]
+column_clues = [[0], [2]]
 metadata/_custom_type_script = "uid://h40x1ivvvgld"

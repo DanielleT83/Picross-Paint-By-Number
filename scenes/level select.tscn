@@ -25,6 +25,7 @@ offset_top = -1.08
 offset_right = 1920.0
 offset_bottom = 1078.92
 texture = ExtResource("1_1cdaa")
+metadata/_edit_lock_ = true
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
