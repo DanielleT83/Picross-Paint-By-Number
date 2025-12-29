@@ -3,6 +3,8 @@ extends Control
 @onready var grid:GridContainer = $GridContainer
 enum CellState {EMPTY, FILLED, MARKED}
 
+signal picross_solved
+var picross_solved_check = false
 
 var grid_size: int
 var column_clues: Array
@@ -44,8 +46,6 @@ func _populate_grid():
 	for i in range(grid_size):
 		add_child(create_clue(row_clues[i], "row", i))
 		add_child(create_clue(column_clues[i], "column", i))
-	
-
 
 func create_button(pos:Vector2):
 	var button = TextureButton.new()
@@ -99,7 +99,6 @@ func _on_button_gui_input(event: InputEvent, button: TextureButton, pos: Vector2
 			button.set_meta("state", CellState.MARKED)
 		selected_button = pos
 
-#check
 func check_puzzle():
 	var puzzle_state = []
 	
@@ -112,5 +111,6 @@ func check_puzzle():
 				current_row.append(0)
 		puzzle_state.append(current_row)
 	
-	if puzzle_state == puzzle_solution:
-		pass
+	if puzzle_state == puzzle_solution and picross_solved_check == false:
+		picross_solved.emit()
+		picross_solved_check = true
