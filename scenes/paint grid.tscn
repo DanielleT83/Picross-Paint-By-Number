@@ -17,3 +17,22 @@ offset_right = 40.0
 offset_bottom = 40.0
 theme_override_constants/h_separation = 0
 theme_override_constants/v_separation = 0
+
+[node name="GridContainer2" type="GridContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/h_separation = 0
+theme_override_constants/v_separation = 0
+
+[node name="GridContainer3" type="GridContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/h_separation = 7
+
+[node name="GridContainer4" type="GridContainer" parent="."]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/h_separation = 7

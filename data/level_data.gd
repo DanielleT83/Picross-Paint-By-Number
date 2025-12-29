@@ -6,6 +6,8 @@ class_name LevelData
 @export var solution: Array
 @export var row_clues: Array
 @export var column_clues: Array
+@export var paint_clues: Array
+@export var colors: Array
 
 #@export var initialize_solution_button := false:
 	#set(value):

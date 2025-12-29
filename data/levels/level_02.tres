@@ -9,4 +9,6 @@ grid_height = 2
 solution = [[0, 1], [0, 1]]
 row_clues = [[1], [1]]
 column_clues = [[0], [2]]
+paint_clues = [[0, 0], [1, 2]]
+colors = [Color(0, 0.96862745, 1, 1), Color(0.49803922, 0, 0, 1), Color(0.73333335, 0.25490198, 0, 1)]
 metadata/_custom_type_script = "uid://h40x1ivvvgld"

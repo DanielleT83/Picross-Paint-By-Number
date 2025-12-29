@@ -48,7 +48,7 @@ func _populate_grid():
 		add_child(create_clue(column_clues[i], "column", i))
 
 func create_button(pos:Vector2):
-	var button = TextureButton.new()
+	var button := TextureButton.new()
 	button.toggle_mode = true
 	button.texture_normal = preload("res://assets/tile_empty.png")
 	button.custom_minimum_size = Vector2(42, 42)
