@@ -14,10 +14,12 @@ var paint_clues: Array
 var picross_solution: Array
 var game_grid = []
 var num_grid = []
+var color_squares: Array
+var current_color: Color
+var current_number: int
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	#call_deferred("_layout_level")
 	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
@@ -43,6 +45,8 @@ func init_game():
 	number_grid.custom_minimum_size = Vector2(grid_size * 42, grid_size * 42)
 	color_grid.custom_minimum_size = Vector2(len(colors) * 42, len(colors) * 42)
 	color_num_grid.custom_minimum_size = Vector2(len(colors) * 42, len(colors) * 42)
+	
+	color_squares = color_grid.get_children()
 
 func _populate_grid():
 	#creating the grid squares (buttons) 
@@ -64,10 +68,6 @@ func _populate_grid():
 	for i in range(len(colors)):
 		create_color_button(i)
 
-#func _notification(what):
-	#if what == NOTIFICATION_RESIZED:
-		#_layout_level()
-
 func layout_level():
 	var viewport_center = get_viewport_rect().size / 2
 	
@@ -76,9 +76,11 @@ func layout_level():
 	
 	var top_grids_pos = viewport_center - top_grids_size / 2
 	grid.position = top_grids_pos
-	num_grid.position = top_grids_pos
+	number_grid.position = top_grids_pos
 	
-	var bottom_grids_pos = Vector2(viewport_center.x - bottom_grids_size.x / 2, top_grids_size.y + top_grids_size.y + grids_gap)
+	var bottom_y = top_grids_pos.y + top_grids_size.y + grids_gap
+	var bottom_x = viewport_center.x - bottom_grids_size.x / 2
+	var bottom_grids_pos = Vector2(bottom_x, bottom_y)
 	color_grid.position = bottom_grids_pos
 	color_num_grid.position = bottom_grids_pos
 
@@ -96,7 +98,7 @@ func create_button(row: int, column: int):
 	normal_stylebox.border_width_bottom = 2
 	normal_stylebox.border_color = Color("#0c5928")
 	button.add_theme_stylebox_override("normal", normal_stylebox)
-	
+	button.add_theme_stylebox_override("disabled", normal_stylebox)
 	
 	var hover_stylebox := StyleBoxFlat.new()
 	hover_stylebox.bg_color = Color("#d7e9d8")
@@ -112,6 +114,8 @@ func create_button(row: int, column: int):
 	button.set_meta("state", CellState.EMPTY)
 	
 	button.pressed.connect(_on_button_pressed.bind(button))
+	
+	button.disabled = true
 	
 	grid.add_child(button)
 	return button
@@ -139,15 +143,7 @@ func create_color_button(index: int):
 	normal_stylebox.border_width_bottom = 2
 	normal_stylebox.border_color = Color("BLACK")
 	color_rect.add_theme_stylebox_override("normal", normal_stylebox)
-	
-	var hover_stylebox := StyleBoxFlat.new()
-	hover_stylebox.bg_color = colors[index]
-	hover_stylebox.border_width_left = 2
-	hover_stylebox.border_width_right = 2
-	hover_stylebox.border_width_top = 2
-	hover_stylebox.border_width_bottom = 2
-	hover_stylebox.border_color = Color("BLACK")
-	color_rect.add_theme_stylebox_override("hover", hover_stylebox)
+	color_rect.add_theme_stylebox_override("hover", normal_stylebox)
 	
 	var pressed_stylebox := StyleBoxFlat.new()
 	pressed_stylebox.bg_color = normal_stylebox.bg_color
@@ -161,8 +157,6 @@ func create_color_button(index: int):
 	color_rect.toggle_mode = true
 	color_rect.custom_minimum_size = Vector2(42, 42)
 	
-	color_rect.pressed.connect(_on_color_pressed.bind(color_rect))
-	
 	var color_number := Label.new()
 	color_number.text = str(index + 1)
 	color_number.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -172,12 +166,29 @@ func create_color_button(index: int):
 	color_number.custom_minimum_size = Vector2(42, 42)
 	color_number.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	
+	color_rect.pressed.connect(_on_color_pressed.bind(color_rect, index))
+	
 	color_grid.add_child(color_rect)
 	color_num_grid.add_child(color_number)
 
 func _on_button_pressed(button: Button):
-	#button.texture_pressed = preload("res://assets/tile_filled.png")
+	var current_stylebox: StyleBoxFlat = button.get_theme_stylebox("pressed")
+	current_stylebox.bg_color = current_color
+	button.add_theme_stylebox_override("pressed", current_stylebox)
+	button.disabled = true
 	button.set_meta("state", CellState.FILLED)
 
-func _on_color_pressed(_button: Button):
-	pass
+func _on_color_pressed(button: Button, number: int):
+	var grid_buttons = grid.get_children()
+	
+	for other_button in color_squares:
+		if other_button != button and other_button.is_pressed() == true:
+			other_button.button_pressed = false
+	current_color = button.get_theme_stylebox("normal").bg_color
+	current_number = number
+	
+	for column in len(paint_clues):
+		for square in paint_clues[column]:
+			if paint_clues[column][square] == number:
+				var index = (column*grid_size) + square
+				grid_buttons[index].disabled = false

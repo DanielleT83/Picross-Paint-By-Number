@@ -29,7 +29,7 @@ func _on_cancel_button_pressed() -> void:
 	$ConfirmScreen.hide()
 
 func _on_timer_timeout() -> void:
-	if $ConfirmScreen.is_visible_in_tree() == false and level_status == 'picross':
+	if $ConfirmScreen.is_visible_in_tree() == false:
 		timer += 1
 		var x = int(timer / 60.0)
 		var y = timer - x * 60
@@ -37,7 +37,6 @@ func _on_timer_timeout() -> void:
 
 func _on_grid_picross_solved() -> void:
 	level_status = 'paint'
-	$PuzzleTimerLabel.hide()
 	$CenterContainer.hide()
 	paint_grid.setup_puzzle(Global.current_level_data)
 	paint_grid.init_game()

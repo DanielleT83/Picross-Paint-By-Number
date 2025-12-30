@@ -105,16 +105,6 @@ stretch_mode = 1
 [node name="PaintGrid" parent="." instance=ExtResource("7_klq6b")]
 layout_mode = 1
 
-[node name="CenterContainer2" type="CenterContainer" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-metadata/_edit_lock_ = true
-
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="picross_solved" from="CenterContainer/Grid" to="." method="_on_grid_picross_solved"]
 [connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
