@@ -1,21 +1,24 @@
 extends Control
 
-@onready var grid:GridContainer = $GridContainer
-@onready var number_grid:GridContainer = $GridContainer2
-@onready var color_grid:GridContainer = $GridContainer3
-@onready var color_num_grid:GridContainer = $GridContainer4
+@onready var grid:GridContainer = $ButtonGrid
+@onready var number_grid:GridContainer = $NumGrid
+@onready var color_grid:GridContainer = $ColorGrid
+@onready var color_num_grid:GridContainer = $ColorNumGrid
 enum CellState {EMPTY, FILLED}
 
+const grids_gap := 20
 
 var grid_size: int
 var colors: Array
 var paint_clues: Array
+var picross_solution: Array
 var game_grid = []
 var num_grid = []
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	pass # Replace with function body.
+	#call_deferred("_layout_level")
+	pass
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
@@ -25,6 +28,7 @@ func setup_puzzle(level_data: LevelData):
 	grid_size = level_data.grid_width
 	colors = level_data.colors
 	paint_clues = level_data.paint_clues
+	picross_solution = level_data.solution
 
 func init_game():
 	grid.columns = grid_size
@@ -35,7 +39,10 @@ func init_game():
 	color_num_grid.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_populate_grid()
 	
-	custom_minimum_size = Vector2(grid_size * 42, grid_size * 42)
+	grid.custom_minimum_size = Vector2(grid_size * 42, grid_size * 42)
+	number_grid.custom_minimum_size = Vector2(grid_size * 42, grid_size * 42)
+	color_grid.custom_minimum_size = Vector2(len(colors) * 42, len(colors) * 42)
+	color_num_grid.custom_minimum_size = Vector2(len(colors) * 42, len(colors) * 42)
 
 func _populate_grid():
 	#creating the grid squares (buttons) 
@@ -43,7 +50,7 @@ func _populate_grid():
 	for i in range(grid_size):
 		var row = []
 		for x in range(grid_size):
-			row.append(create_button())
+			row.append(create_button(x, i))
 		game_grid.append(row)
 	
 	#creating the grid numbers
@@ -56,15 +63,33 @@ func _populate_grid():
 		
 	for i in range(len(colors)):
 		create_color_button(i)
-		
-		
-		
 
-func create_button():
+#func _notification(what):
+	#if what == NOTIFICATION_RESIZED:
+		#_layout_level()
+
+func layout_level():
+	var viewport_center = get_viewport_rect().size / 2
+	
+	var top_grids_size = grid.get_combined_minimum_size()
+	var bottom_grids_size = color_grid.get_combined_minimum_size()
+	
+	var top_grids_pos = viewport_center - top_grids_size / 2
+	grid.position = top_grids_pos
+	num_grid.position = top_grids_pos
+	
+	var bottom_grids_pos = Vector2(viewport_center.x - bottom_grids_size.x / 2, top_grids_size.y + top_grids_size.y + grids_gap)
+	color_grid.position = bottom_grids_pos
+	color_num_grid.position = bottom_grids_pos
+
+func create_button(row: int, column: int):
 	var button := Button.new()
 	
 	var normal_stylebox := StyleBoxFlat.new()
-	normal_stylebox.bg_color = Color("#d7e9d8")
+	if picross_solution[column][row] == 0:
+		normal_stylebox.bg_color = Color("#d7e9d8")
+	elif picross_solution[column][row] == 1:
+		normal_stylebox.bg_color = Color("#a8baa9")
 	normal_stylebox.border_width_left = 2
 	normal_stylebox.border_width_right = 2
 	normal_stylebox.border_width_top = 2

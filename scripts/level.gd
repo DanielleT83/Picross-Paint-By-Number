@@ -1,7 +1,7 @@
 extends Control
 
 @onready var grid = $CenterContainer/Grid
-@onready var paint_grid = $CenterContainer2/PaintGrid
+@onready var paint_grid = $PaintGrid
 
 var timer:int = 0
 
@@ -9,7 +9,7 @@ var level_status = 'picross'
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
-	$CenterContainer2.hide()
+	paint_grid.hide()
 	$ConfirmScreen.hide()
 	grid.setup_puzzle(Global.current_level_data)
 	grid.init_game()
@@ -41,5 +41,6 @@ func _on_grid_picross_solved() -> void:
 	$CenterContainer.hide()
 	paint_grid.setup_puzzle(Global.current_level_data)
 	paint_grid.init_game()
-	$CenterContainer2.show()
+	paint_grid.layout_level()
+	paint_grid.show()
 	

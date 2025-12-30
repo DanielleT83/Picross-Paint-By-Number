@@ -13,7 +13,6 @@ var puzzle_solution: Array
 
 var game_grid = []
 
-var selected_button:Vector2
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -21,7 +20,7 @@ func _ready() -> void:
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(_delta: float) -> void:
-	check_puzzle()
+	pass
 
 func setup_puzzle(level_data: LevelData):
 	grid_size = level_data.grid_width
@@ -40,14 +39,14 @@ func _populate_grid():
 	for i in range(grid_size):
 		var row = []
 		for x in range(grid_size):
-			row.append(create_button(Vector2(i, x)))
+			row.append(create_button())
 		game_grid.append(row)
 	
 	for i in range(grid_size):
 		add_child(create_clue(row_clues[i], "row", i))
 		add_child(create_clue(column_clues[i], "column", i))
 
-func create_button(pos:Vector2):
+func create_button():
 	var button := TextureButton.new()
 	button.toggle_mode = true
 	button.texture_normal = preload("res://assets/tile_empty.png")
@@ -55,8 +54,8 @@ func create_button(pos:Vector2):
 	
 	button.set_meta("state", CellState.EMPTY)
 	
-	button.pressed.connect(_on_button_left_pressed.bind(button,pos))
-	button.gui_input.connect(_on_button_gui_input.bind(button, pos))
+	button.pressed.connect(_on_button_left_pressed.bind(button))
+	button.gui_input.connect(_on_button_gui_input.bind(button))
 	
 	grid.add_child(button)
 	return button
@@ -86,18 +85,18 @@ func create_clue(clue_text, clue_type:String, pos:int):
 	
 	return clue
 
-func _on_button_left_pressed(button: TextureButton, pos: Vector2):
+func _on_button_left_pressed(button: TextureButton):
 	button.texture_pressed = preload("res://assets/tile_filled.png")
 	button.set_meta("state", CellState.FILLED)
-	selected_button = pos
+	check_puzzle()
 
-func _on_button_gui_input(event: InputEvent, button: TextureButton, pos: Vector2):
+func _on_button_gui_input(event: InputEvent, button: TextureButton):
 	if event is InputEventMouseButton and event.pressed:
 		if event.is_action_pressed("right_click"):
 			button.texture_pressed = preload("res://assets/tile_x.png")
 			button.button_pressed = not button.button_pressed
 			button.set_meta("state", CellState.MARKED)
-		selected_button = pos
+	check_puzzle()
 
 func check_puzzle():
 	var puzzle_state = []

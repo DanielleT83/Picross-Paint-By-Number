@@ -2,7 +2,7 @@
 
 [ext_resource type="Texture2D" uid="uid://bo572ijbp60tu" path="res://assets/background TEMP.png" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://cdni4h8a1pre5" path="res://scripts/level.gd" id="1_w8frs"]
-[ext_resource type="PackedScene" uid="uid://bgvo32mjppvey" path="res://scenes/grid.tscn" id="2_w7c3h"]
+[ext_resource type="PackedScene" uid="uid://bgvo32mjppvey" path="res://scenes/Grid.tscn" id="2_w7c3h"]
 [ext_resource type="Texture2D" uid="uid://k76tnsuam5la" path="res://icon.svg" id="4_mx8sn"]
 [ext_resource type="Texture2D" uid="uid://b7spfbaje32j1" path="res://assets/Start Button.png" id="5_2r41h"]
 [ext_resource type="Texture2D" uid="uid://cpdf4lytixtkm" path="res://assets/tile_x.png" id="6_klq6b"]
@@ -102,7 +102,11 @@ offset_bottom = 661.0
 texture_normal = ExtResource("6_klq6b")
 stretch_mode = 1
 
+[node name="PaintGrid" parent="." instance=ExtResource("7_klq6b")]
+layout_mode = 1
+
 [node name="CenterContainer2" type="CenterContainer" parent="."]
+visible = false
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -110,9 +114,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 metadata/_edit_lock_ = true
-
-[node name="PaintGrid" parent="CenterContainer2" instance=ExtResource("7_klq6b")]
-layout_mode = 2
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="picross_solved" from="CenterContainer/Grid" to="." method="_on_grid_picross_solved"]
