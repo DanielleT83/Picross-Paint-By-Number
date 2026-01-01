@@ -4,7 +4,7 @@ extends Control
 @onready var paint_grid = $PaintGrid
 
 var timer:int = 0
-
+var current_data = Global.current_level_data
 var level_status = 'picross'
 
 # Called when the node enters the scene tree for the first time.
@@ -14,7 +14,9 @@ func _ready() -> void:
 	$SolvedScreen.hide()
 	$ContinueButton.hide()
 	$SolvedLabel.hide()
-	grid.setup_puzzle(Global.current_level_data)
+	$TitleLabel.text = current_data.title
+	$TitleLabel.hide()
+	grid.setup_puzzle(current_data)
 	grid.init_game()
 	$CenterContainer.show()
 
@@ -60,6 +62,7 @@ func _on_continue_button_pressed() -> void:
 
 func _on_solved_timer_1_timeout() -> void:
 	$SolvedLabel.show()
+	$TitleLabel.show()
 	$SolvedTimer2.start()
 
 func _on_solved_timer_2_timeout() -> void:

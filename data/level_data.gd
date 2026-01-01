@@ -3,11 +3,12 @@ class_name LevelData
 
 @export var grid_width: int
 @export var grid_height: int
-@export var solution: Array
+@export var solution: Array #by row
 @export var row_clues: Array
 @export var column_clues: Array
-@export var paint_clues: Array
+@export var paint_clues: Array #by column
 @export var colors: Array
+@export var title: String
 
 #@export var initialize_solution_button := false:
 	#set(value):

@@ -10,8 +10,10 @@ var grid_size: int
 var column_clues: Array
 var row_clues: Array
 var puzzle_solution: Array
+var row_clue_labels: Array = []
+var column_clue_labels: Array = []
 
-var game_grid = []
+var game_grid: Array = []
 
 
 # Called when the node enters the scene tree for the first time.
@@ -39,14 +41,19 @@ func _populate_grid():
 	for i in range(grid_size):
 		var row = []
 		for x in range(grid_size):
-			row.append(create_button())
+			row.append(create_button(i, x))
 		game_grid.append(row)
 	
 	for i in range(grid_size):
-		add_child(create_clue(row_clues[i], "row", i))
-		add_child(create_clue(column_clues[i], "column", i))
+		var row_clue = create_clue(row_clues[i], "row", i)
+		add_child(row_clue)
+		row_clue_labels.append(row_clue)
+		
+		var column_clue = create_clue(column_clues[i], "column", i)
+		add_child(column_clue)
+		column_clue_labels.append(column_clue)
 
-func create_button():
+func create_button(column: int, row: int):
 	var button := TextureButton.new()
 	button.toggle_mode = true
 	button.texture_normal = preload("res://assets/tile_empty.png")
@@ -54,7 +61,7 @@ func create_button():
 	
 	button.set_meta("state", CellState.EMPTY)
 	
-	button.pressed.connect(_on_button_left_pressed.bind(button))
+	button.pressed.connect(_on_button_left_pressed.bind(button, column, row))
 	button.gui_input.connect(_on_button_gui_input.bind(button))
 	
 	grid.add_child(button)
@@ -81,11 +88,10 @@ func create_clue(clue_text, clue_type:String, pos:int):
 		clue.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		clue.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 		clue.text = text.replace(" ", "\n")
-		clue.position = Vector2(grid.position.x + (pos * 42) + 15, grid.position.y - 65)
-	
+		clue.position = Vector2(grid.position.x + (pos * 42) + 15, grid.position.y - 92)	
 	return clue
 
-func _on_button_left_pressed(button: TextureButton):
+func _on_button_left_pressed(button: TextureButton): #, column: int, row: int):
 	button.texture_pressed = preload("res://assets/tile_filled.png")
 	button.set_meta("state", CellState.FILLED)
 	check_puzzle()
