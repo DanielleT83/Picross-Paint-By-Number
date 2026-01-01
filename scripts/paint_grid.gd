@@ -18,6 +18,8 @@ var color_squares: Array
 var current_color: Color
 var current_number: int
 
+signal paint_by_number_solved
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
@@ -112,9 +114,8 @@ func create_button(row: int, column: int):
 	button.custom_minimum_size = Vector2(42, 42)
 	
 	button.set_meta("state", CellState.EMPTY)
-	
-	button.pressed.connect(_on_button_pressed.bind(button))
-	
+	button.focus_mode = Control.FOCUS_NONE
+	button.pressed.connect(_on_button_pressed.bind(button, row, column))
 	button.disabled = true
 	
 	grid.add_child(button)
@@ -125,7 +126,7 @@ func create_number(row: int, column: int):
 	number.text = str(paint_clues[row][column] + 1)
 	number.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	number.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	number.add_theme_color_override("font_color", Color("#0c5928"))
+	number.add_theme_color_override("font_color", Color("44664ac8"))
 	number.add_theme_font_size_override("font_size", 22)
 	number.custom_minimum_size = Vector2(42, 42)
 	number.mouse_filter = Control.MOUSE_FILTER_IGNORE
@@ -154,6 +155,7 @@ func create_color_button(index: int):
 	pressed_stylebox.border_color = Color("GRAY")
 	color_rect.add_theme_stylebox_override("pressed", pressed_stylebox) 
 	
+	color_rect.focus_mode = Control.FOCUS_NONE
 	color_rect.toggle_mode = true
 	color_rect.custom_minimum_size = Vector2(42, 42)
 	
@@ -171,24 +173,57 @@ func create_color_button(index: int):
 	color_grid.add_child(color_rect)
 	color_num_grid.add_child(color_number)
 
-func _on_button_pressed(button: Button):
+func _on_button_pressed(button: Button, row: int, column: int):
 	var current_stylebox: StyleBoxFlat = button.get_theme_stylebox("pressed")
 	current_stylebox.bg_color = current_color
 	button.add_theme_stylebox_override("pressed", current_stylebox)
+	button.add_theme_stylebox_override("disabled", current_stylebox)
 	button.disabled = true
 	button.set_meta("state", CellState.FILLED)
-
-func _on_color_pressed(button: Button, number: int):
-	var grid_buttons = grid.get_children()
 	
+	var index = (column * grid_size) + row
+	var grid_nums = number_grid.get_children()
+	grid_nums[index].add_theme_color_override("font_color", current_color)
+	
+	check_grid()
+
+func _on_color_pressed(button: Button, number: int):	
 	for other_button in color_squares:
 		if other_button != button and other_button.is_pressed() == true:
 			other_button.button_pressed = false
+	
 	current_color = button.get_theme_stylebox("normal").bg_color
 	current_number = number
 	
-	for column in len(paint_clues):
-		for square in paint_clues[column]:
-			if paint_clues[column][square] == number:
-				var index = (column*grid_size) + square
-				grid_buttons[index].disabled = false
+	var grid_buttons = grid.get_children()
+	var grid_nums = number_grid.get_children()
+	
+	for row in range(grid_size):
+		for column in range(grid_size):
+			var index = (row * grid_size) + column
+			var target_button = grid_buttons[index]
+			
+			if target_button.get_meta("state") == CellState.FILLED:
+				continue
+			if paint_clues[column][row] == number:
+				target_button.disabled = false
+				grid_nums[index].add_theme_color_override("font_color", Color("#0c5928"))
+			else:
+				target_button.disabled = true
+				grid_nums[index].add_theme_color_override("font_color", Color("44664ac8"))
+
+func check_grid():
+	var buttons = grid.get_children()
+	var check_counter := 0
+	
+	for row in range(grid_size):
+		for column in range(grid_size):
+			var index = (row * grid_size) + column
+			var target_button = buttons[index]
+			if target_button.get_meta("state") == CellState.FILLED:
+				check_counter += 1
+			elif target_button.get_meta("state") == CellState.EMPTY:
+				continue
+	
+	if check_counter == (grid_size * grid_size):
+		paint_by_number_solved.emit()

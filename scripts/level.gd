@@ -11,6 +11,9 @@ var level_status = 'picross'
 func _ready() -> void:
 	paint_grid.hide()
 	$ConfirmScreen.hide()
+	$SolvedScreen.hide()
+	$ContinueButton.hide()
+	$SolvedLabel.hide()
 	grid.setup_puzzle(Global.current_level_data)
 	grid.init_game()
 	$CenterContainer.show()
@@ -29,7 +32,7 @@ func _on_cancel_button_pressed() -> void:
 	$ConfirmScreen.hide()
 
 func _on_timer_timeout() -> void:
-	if $ConfirmScreen.is_visible_in_tree() == false:
+	if $ConfirmScreen.is_visible_in_tree() == false and level_status != 'done':
 		timer += 1
 		var x = int(timer / 60.0)
 		var y = timer - x * 60
@@ -43,3 +46,21 @@ func _on_grid_picross_solved() -> void:
 	paint_grid.layout_level()
 	paint_grid.show()
 	
+
+func _on_paint_grid_paint_by_number_solved() -> void:
+	level_status = 'done'
+	$PaintGrid/ColorNumGrid.hide()
+	$PaintGrid/ColorGrid.hide()
+	$BackButton.hide()
+	$SolvedScreen.show()
+	$SolvedTimer1.start()
+
+func _on_continue_button_pressed() -> void:
+	get_tree().change_scene_to_file("res://scenes/level select.tscn")
+
+func _on_solved_timer_1_timeout() -> void:
+	$SolvedLabel.show()
+	$SolvedTimer2.start()
+
+func _on_solved_timer_2_timeout() -> void:
+	$ContinueButton.show()

@@ -23,21 +23,6 @@ offset_right = 1920.0
 offset_bottom = 1080.0
 texture = ExtResource("1_2q6dc")
 
-[node name="PuzzleTimerLabel" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 5
-anchor_left = 0.5
-anchor_right = 0.5
-offset_left = -107.0
-offset_top = 25.0
-offset_right = 107.0
-offset_bottom = 85.0
-grow_horizontal = 2
-theme_override_font_sizes/font_size = 40
-text = "00:00"
-horizontal_alignment = 1
-vertical_alignment = 1
-
 [node name="Timer" type="Timer" parent="."]
 autostart = true
 
@@ -53,7 +38,34 @@ metadata/_edit_lock_ = true
 [node name="Grid" parent="CenterContainer" instance=ExtResource("2_w7c3h")]
 layout_mode = 2
 
-[node name="TextureButton" type="TextureButton" parent="."]
+[node name="SolvedScreen" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 0.49803922)
+
+[node name="PuzzleTimerLabel" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 5
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -107.0
+offset_top = 25.0
+offset_right = 107.0
+offset_bottom = 85.0
+grow_horizontal = 2
+theme_override_colors/font_color = Color(0.84313726, 0.9137255, 0.84705883, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.654902)
+theme_override_font_sizes/font_size = 40
+text = "00:00"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="PaintGrid" parent="." instance=ExtResource("7_klq6b")]
+visible = false
+layout_mode = 1
+
+[node name="BackButton" type="TextureButton" parent="."]
 layout_mode = 0
 offset_left = 25.0
 offset_top = 25.0
@@ -81,6 +93,7 @@ offset_right = 20.0
 offset_bottom = 12.799988
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_colors/font_color = Color(0.84313726, 0.9137255, 0.84705883, 1)
 theme_override_font_sizes/font_size = 40
 text = "Exiting the puzzle will cause all puzzle progress to be lost. Do you want to exit?"
 horizontal_alignment = 1
@@ -102,11 +115,49 @@ offset_bottom = 661.0
 texture_normal = ExtResource("6_klq6b")
 stretch_mode = 1
 
-[node name="PaintGrid" parent="." instance=ExtResource("7_klq6b")]
+[node name="SolvedLabel" type="Label" parent="."]
 layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.39000002
+anchor_right = 0.5
+anchor_bottom = 0.39000002
+offset_left = -754.0
+offset_top = -298.2
+offset_right = 754.0
+offset_bottom = -243.20001
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.84313726, 0.9137255, 0.84705883, 1)
+theme_override_font_sizes/font_size = 40
+text = "Puzzle Completed!"
+horizontal_alignment = 1
+
+[node name="ContinueButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -154.0
+offset_top = 335.0
+offset_right = 154.0
+offset_bottom = 485.0
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("5_2r41h")
+
+[node name="SolvedTimer1" type="Timer" parent="."]
+
+[node name="SolvedTimer2" type="Timer" parent="."]
 
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="picross_solved" from="CenterContainer/Grid" to="." method="_on_grid_picross_solved"]
-[connection signal="pressed" from="TextureButton" to="." method="_on_texture_button_pressed"]
+[connection signal="paint_by_number_solved" from="PaintGrid" to="." method="_on_paint_grid_paint_by_number_solved"]
+[connection signal="pressed" from="BackButton" to="." method="_on_texture_button_pressed"]
 [connection signal="pressed" from="ConfirmScreen/ProceedButton" to="." method="_on_proceed_button_pressed"]
 [connection signal="pressed" from="ConfirmScreen/CancelButton" to="." method="_on_cancel_button_pressed"]
+[connection signal="pressed" from="ContinueButton" to="." method="_on_continue_button_pressed"]
+[connection signal="timeout" from="SolvedTimer1" to="." method="_on_solved_timer_1_timeout"]
+[connection signal="timeout" from="SolvedTimer2" to="." method="_on_solved_timer_2_timeout"]

@@ -1,17 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://fupj8m67cjv5"]
+[gd_scene load_steps=6 format=3 uid="uid://fupj8m67cjv5"]
 
 [ext_resource type="Script" uid="uid://bvhjlce0r55n3" path="res://scripts/title_screen.gd" id="1_73n4j"]
 [ext_resource type="Texture2D" uid="uid://bo572ijbp60tu" path="res://assets/background TEMP.png" id="2_5hkjy"]
 [ext_resource type="Texture2D" uid="uid://b7spfbaje32j1" path="res://assets/Start Button.png" id="2_olc8q"]
 [ext_resource type="Texture2D" uid="uid://bty2uu1xa4woy" path="res://assets/start_button_press.png" id="4_x3emf"]
 [ext_resource type="Texture2D" uid="uid://30bsbg00l4oj" path="res://assets/start_button_hover.png" id="5_tkrqk"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dqjbv"]
-bg_color = Color(0.003921569, 0.003921569, 0.003921569, 0)
-corner_detail = 7
-shadow_color = Color(0, 0, 0, 0.24313726)
-shadow_size = 1
-shadow_offset = Vector2(5, 5)
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
@@ -31,14 +24,6 @@ offset_right = 1920.0
 offset_bottom = 1073.0
 texture = ExtResource("2_5hkjy")
 metadata/_edit_lock_ = true
-
-[node name="StartShadow" type="Panel" parent="."]
-layout_mode = 0
-offset_left = 810.0
-offset_top = 625.0
-offset_right = 1110.0
-offset_bottom = 750.0
-theme_override_styles/panel = SubResource("StyleBoxFlat_dqjbv")
 
 [node name="StartButton" type="TextureButton" parent="."]
 layout_mode = 1
