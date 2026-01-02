@@ -4,4 +4,12 @@
 
 [resource]
 script = ExtResource("1_g61bg")
+grid_width = 3
+grid_height = 3
+solution = [[0, 0, 0], [1, 1, 1], [0, 1, 1]]
+row_clues = [[0], [3], [2]]
+column_clues = [[1], [2], [2]]
+paint_clues = [[0, 0, 0], [1, 1, 2], [2, 1, 0]]
+colors = [Color(0, 0, 0, 1), Color(0.51832694, 0.13619608, 0.2399554, 1), Color(0.33612335, 0.6864659, 0.6190992, 1)]
+title = "test"
 metadata/_custom_type_script = "uid://h40x1ivvvgld"

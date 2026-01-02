@@ -69,13 +69,16 @@ func create_clue(clue_text, clue_type:String, pos:int):
 	var clue = Label.new()
 	var text: String
 	
-	clue.add_theme_color_override("font_color", Color("#d7e9d8"))
-	clue.add_theme_font_size_override("font_size", 20)
-	
 	text = str(clue_text)
 	var chars_to_replace = [",", "[", "]"]
 	for x in chars_to_replace:
 		text = text.replace(x, "")
+	
+	if text == "0":
+		clue.add_theme_color_override("font_color", Color("#44664ac8"))
+	else:
+		clue.add_theme_color_override("font_color", Color("#d7e9d8"))
+	clue.add_theme_font_size_override("font_size", 20)
 	
 	if clue_type == "row":
 		clue.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
@@ -136,6 +139,9 @@ func get_current_clues(cell_states: Array):
 				counter = 0
 	if counter > 0:
 			clues.append(counter)
+		
+	if len(clues) == 0:
+		return [0]
 		
 	return clues
 

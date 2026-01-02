@@ -107,7 +107,7 @@ func create_button(row: int, column: int):
 	button.add_theme_stylebox_override("hover", hover_stylebox)
 	
 	var pressed_stylebox := StyleBoxFlat.new()
-	pressed_stylebox.bg_color = colors[0]
+	pressed_stylebox.bg_color = colors[paint_clues[row][column]]
 	button.add_theme_stylebox_override("pressed", pressed_stylebox)
 	
 	button.toggle_mode = true
@@ -155,6 +155,15 @@ func create_color_button(index: int):
 	pressed_stylebox.border_color = Color("GRAY")
 	color_rect.add_theme_stylebox_override("pressed", pressed_stylebox) 
 	
+	var disabled_stylebox := StyleBoxFlat.new()
+	disabled_stylebox.bg_color = normal_stylebox.bg_color
+	disabled_stylebox.border_width_left = 2
+	disabled_stylebox.border_width_right = 2
+	disabled_stylebox.border_width_top = 2
+	disabled_stylebox.border_width_bottom = 2
+	disabled_stylebox.border_color = Color("2f2f2f9c")
+	color_rect.add_theme_stylebox_override("disabled", disabled_stylebox) 
+	
 	color_rect.focus_mode = Control.FOCUS_NONE
 	color_rect.toggle_mode = true
 	color_rect.custom_minimum_size = Vector2(42, 42)
@@ -185,9 +194,10 @@ func _on_button_pressed(button: Button, row: int, column: int):
 	var grid_nums = number_grid.get_children()
 	grid_nums[index].add_theme_color_override("font_color", current_color)
 	
+	check_paint_status(current_color, current_number)
 	check_grid()
 
-func _on_color_pressed(button: Button, number: int):	
+func _on_color_pressed(button: Button, number: int):		
 	for other_button in color_squares:
 		if other_button != button and other_button.is_pressed() == true:
 			other_button.button_pressed = false
@@ -212,8 +222,6 @@ func _on_color_pressed(button: Button, number: int):
 			else:
 				target_button.disabled = true
 				grid_nums[index].add_theme_color_override("font_color", Color("44664ac8"))
-	
-	check_paint_status(current_color, current_number)
 
 func check_grid():
 	var buttons = grid.get_children()
@@ -246,9 +254,12 @@ func check_paint_status(color: Color, color_number: int):
 			var cell_color = cell.get_theme_stylebox("pressed").bg_color
 			if cell_color == color:
 				current_counter += 1
-	
-	print(total, " versus ", current_counter)
-	
+		
 	if total == current_counter:
+		color_grid.get_child(color_number).disabled = true
 		var current_color_num = color_num_grid.get_child(color_number)
-		current_color_num.add_theme_color_override("font_color", Color("#44664ac8"))
+		current_color_num.add_theme_color_override("font_color", Color("2f2f2f9c"))
+		
+		if (color_number + 1) != len(color_grid.get_children()):
+			color_grid.get_child(color_number + 1).button_pressed = not color_grid.get_child(color_number + 1).button_pressed
+			color_grid.get_child(color_number + 1).pressed.emit()
