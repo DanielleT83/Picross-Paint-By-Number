@@ -12,9 +12,7 @@ var row_clues: Array
 var puzzle_solution: Array
 var row_clue_labels: Array = []
 var column_clue_labels: Array = []
-
 var game_grid: Array = []
-
 
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -41,7 +39,7 @@ func _populate_grid():
 	for i in range(grid_size):
 		var row = []
 		for x in range(grid_size):
-			row.append(create_button(i, x))
+			row.append(create_button())
 		game_grid.append(row)
 	
 	for i in range(grid_size):
@@ -53,7 +51,7 @@ func _populate_grid():
 		add_child(column_clue)
 		column_clue_labels.append(column_clue)
 
-func create_button(column: int, row: int):
+func create_button():
 	var button := TextureButton.new()
 	button.toggle_mode = true
 	button.texture_normal = preload("res://assets/tile_empty.png")
@@ -61,7 +59,7 @@ func create_button(column: int, row: int):
 	
 	button.set_meta("state", CellState.EMPTY)
 	
-	button.pressed.connect(_on_button_left_pressed.bind(button, column, row))
+	button.pressed.connect(_on_button_left_pressed.bind(button))
 	button.gui_input.connect(_on_button_gui_input.bind(button))
 	
 	grid.add_child(button)
@@ -71,7 +69,7 @@ func create_clue(clue_text, clue_type:String, pos:int):
 	var clue = Label.new()
 	var text: String
 	
-	clue.add_theme_color_override("font_color", Color.LIGHT_GRAY)
+	clue.add_theme_color_override("font_color", Color("#d7e9d8"))
 	clue.add_theme_font_size_override("font_size", 20)
 	
 	text = str(clue_text)
@@ -91,9 +89,13 @@ func create_clue(clue_text, clue_type:String, pos:int):
 		clue.position = Vector2(grid.position.x + (pos * 42) + 15, grid.position.y - 92)	
 	return clue
 
-func _on_button_left_pressed(button: TextureButton): #, column: int, row: int):
-	button.texture_pressed = preload("res://assets/tile_filled.png")
-	button.set_meta("state", CellState.FILLED)
+func _on_button_left_pressed(button: TextureButton):
+	if button.button_pressed:
+		button.texture_pressed = preload("res://assets/tile_filled.png")
+		button.set_meta("state", CellState.FILLED)
+	else:
+		button.set_meta("state", CellState.EMPTY)
+	
 	check_puzzle()
 
 func _on_button_gui_input(event: InputEvent, button: TextureButton):
@@ -115,7 +117,53 @@ func check_puzzle():
 			else:
 				current_row.append(0)
 		puzzle_state.append(current_row)
+		
+	update_clue_colors()
 	
 	if puzzle_state == puzzle_solution and picross_solved_check == false:
 		picross_solved.emit()
 		picross_solved_check = true
+
+func get_current_clues(cell_states: Array):
+	var clues = []
+	var counter = 0
+	for state in cell_states:
+		if state == CellState.FILLED:
+			counter += 1
+		else:
+			if counter > 0:
+				clues.append(counter)
+				counter = 0
+	if counter > 0:
+			clues.append(counter)
+		
+	return clues
+
+func update_clue_colors():
+	# checking rows
+	for y in range(grid_size):
+		var row_states = []
+		for x in range(grid_size):
+			var button = game_grid[y][x]
+			if button.button_pressed and button.get_meta("state") == CellState.FILLED:
+				row_states.append(CellState.FILLED)
+			else:
+				row_states.append(CellState.EMPTY)
+		if get_current_clues(row_states) == row_clues[y]:
+			row_clue_labels[y].add_theme_color_override("font_color", Color("#44664ac8"))
+		else:
+			row_clue_labels[y].add_theme_color_override("font_color", Color("#d7e9d8"))
+		
+	# checking columns
+	for x in range(grid_size):
+		var column_states = []
+		for y in range(grid_size):
+			var button = game_grid[y][x]
+			if button.button_pressed and button.get_meta("state") == CellState.FILLED:
+				column_states.append(CellState.FILLED)
+			else:
+				column_states.append(CellState.EMPTY)
+		if get_current_clues(column_states) == column_clues[x]:
+			column_clue_labels[x].add_theme_color_override("font_color", Color("#44664ac8"))
+		else:
+			column_clue_labels[x].add_theme_color_override("font_color", Color("#d7e9d8"))

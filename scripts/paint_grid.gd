@@ -198,6 +198,7 @@ func _on_color_pressed(button: Button, number: int):
 	var grid_buttons = grid.get_children()
 	var grid_nums = number_grid.get_children()
 	
+	# check which buttons in the main grid correspond to the current color selected
 	for row in range(grid_size):
 		for column in range(grid_size):
 			var index = (row * grid_size) + column
@@ -211,6 +212,8 @@ func _on_color_pressed(button: Button, number: int):
 			else:
 				target_button.disabled = true
 				grid_nums[index].add_theme_color_override("font_color", Color("44664ac8"))
+	
+	check_paint_status(current_color, current_number)
 
 func check_grid():
 	var buttons = grid.get_children()
@@ -227,3 +230,25 @@ func check_grid():
 	
 	if check_counter == (grid_size * grid_size):
 		paint_by_number_solved.emit()
+
+func check_paint_status(color: Color, color_number: int):
+	var total = 0
+	var current_counter := 0
+	var grid_array = grid.get_children()
+	
+	for column in paint_clues:
+		for num in column:
+			if num == color_number:
+				total += 1
+	
+	for cell in grid_array:
+		if cell.get_meta("state") == CellState.FILLED:
+			var cell_color = cell.get_theme_stylebox("pressed").bg_color
+			if cell_color == color:
+				current_counter += 1
+	
+	print(total, " versus ", current_counter)
+	
+	if total == current_counter:
+		var current_color_num = color_num_grid.get_child(color_number)
+		current_color_num.add_theme_color_override("font_color", Color("#44664ac8"))
