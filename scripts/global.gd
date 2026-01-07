@@ -11,6 +11,7 @@ func mark_level_solved(level: String):
 func is_level_solved(level: String):
 	return solved_levels.has(level)
 	
+
 ## Called when the node enters the scene tree for the first time.
 #func _ready() -> void:
 	#pass # Replace with function body.

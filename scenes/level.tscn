@@ -170,6 +170,7 @@ texture_normal = ExtResource("5_2r41h")
 [node name="SolvedTimer2" type="Timer" parent="."]
 wait_time = 0.9
 
+
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]
 [connection signal="picross_solved" from="CenterContainer/Grid" to="." method="_on_grid_picross_solved"]
 [connection signal="paint_by_number_solved" from="PaintGrid" to="." method="_on_paint_grid_paint_by_number_solved"]

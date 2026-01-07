@@ -14,4 +14,5 @@ paint_clues = [[3, 3, 3, 3, 0, 0, 0, 0, 0, 0], [3, 3, 2, 1, 1, 1, 0, 0, 0, 0], [
 colors = [Color(0.23921569, 0.27058825, 0.29803923, 1), Color(0.3529412, 0.4117647, 0.44705883, 1), Color(0.5019608, 0.5803922, 0.6745098, 1), Color(0.35958868, 0.71492594, 0.93077195, 1)]
 title = "mountains"
 solved_image = ExtResource("2_r1f35")
+
 metadata/_custom_type_script = "uid://h40x1ivvvgld"

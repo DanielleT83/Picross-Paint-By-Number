@@ -14,4 +14,5 @@ paint_clues = [[0, 0, 0], [1, 1, 2], [2, 1, 0]]
 colors = [Color(0, 0, 0, 1), Color(0.51832694, 0.13619608, 0.2399554, 1), Color(0.33612335, 0.6864659, 0.6190992, 1)]
 title = "test"
 solved_image = ExtResource("2_8yld6")
+
 metadata/_custom_type_script = "uid://h40x1ivvvgld"

@@ -6,6 +6,7 @@ extends Control
 
 enum LevelState {UNSOLVED, SOLVED}
 
+
 const grid_length = 3
 const grid_height = 2
 var levels_grid = []
@@ -48,6 +49,7 @@ func create_button(pos:Vector2):
 	button.set_meta("state", LevelState.UNSOLVED)
 	
 	var button_num = Label.new()
+
 	button_num.position = pos
 	button_num.size.x = level_button_size
 	button_num.size.y = level_button_size
