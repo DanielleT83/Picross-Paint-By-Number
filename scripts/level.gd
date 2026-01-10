@@ -69,4 +69,3 @@ func _on_solved_timer_2_timeout() -> void:
 	$ContinueButton.show()
 	current_data.solved_state = true
 	Global.mark_level_solved(Global.current_level_data.resource_path)
-

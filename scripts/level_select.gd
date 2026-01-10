@@ -13,6 +13,7 @@ var levels_grid = []
 var level_num_counter = 1
 const level_button_size = 210
 
+var pixel_font = preload("res://assets/Tiny5-Regular.ttf")
 
 
 # Called when the node enters the scene tree for the first time.
@@ -50,13 +51,14 @@ func create_button(pos:Vector2):
 	
 	var button_num = Label.new()
 
-	button_num.position = pos
+	button_num.position = Vector2(pos.x + 15, pos.y)
 	button_num.size.x = level_button_size
 	button_num.size.y = level_button_size
 	button_num.text = str(level_num_counter)
 	button_num.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	button_num.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	button_num.add_theme_font_size_override("font_size", 125)
+	button_num.add_theme_font_override("font", pixel_font)
+	button_num.add_theme_font_size_override("font_size", 145)
 	button_num.add_theme_color_override("font_color", Color.DARK_GREEN)
 	
 	button.pressed.connect(_on_button_pressed.bind(level_num_counter))

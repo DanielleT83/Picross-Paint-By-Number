@@ -1,6 +1,5 @@
 [gd_scene load_steps=9 format=3 uid="uid://extn15gw8l3o"]
 
-
 [ext_resource type="Texture2D" uid="uid://bo572ijbp60tu" path="res://assets/background TEMP.png" id="1_1cdaa"]
 [ext_resource type="Script" uid="uid://c5gwpqvt8y2jc" path="res://scripts/level_select.gd" id="1_tbuk2"]
 [ext_resource type="Script" uid="uid://h40x1ivvvgld" path="res://data/level_data.gd" id="2_o10g0"]
@@ -9,7 +8,6 @@
 [ext_resource type="Resource" uid="uid://u5raksh4gr1m" path="res://data/levels/level_03.tres" id="5_i8omq"]
 [ext_resource type="Resource" uid="uid://c4ubmr8hd7r2x" path="res://data/levels/level_04.tres" id="6_8hqx6"]
 [ext_resource type="Resource" uid="uid://coppb2pxthbee" path="res://data/levels/level_05.tres" id="7_8hqx6"]
-
 
 [node name="LevelSelect" type="Control"]
 layout_mode = 3
@@ -20,7 +18,6 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_tbuk2")
 levels = Array[ExtResource("2_o10g0")]([ExtResource("3_bj4fl"), ExtResource("4_bj4fl"), ExtResource("5_i8omq"), ExtResource("6_8hqx6"), ExtResource("7_8hqx6")])
-
 
 [node name="Background" type="TextureRect" parent="."]
 layout_mode = 1
@@ -44,6 +41,3 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/h_separation = 425
 theme_override_constants/v_separation = 350
-
-[connection signal="focus_entered" from="." to="." method="_on_focus_entered"]
-

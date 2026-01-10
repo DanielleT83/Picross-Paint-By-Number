@@ -14,6 +14,8 @@ var row_clue_labels: Array = []
 var column_clue_labels: Array = []
 var game_grid: Array = []
 
+var pixel_font = preload("res://assets/Tiny5-Regular.ttf")
+
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	pass
@@ -69,27 +71,35 @@ func create_clue(clue_text, clue_type:String, pos:int):
 	var clue = Label.new()
 	var text: String
 	
+	# Cleaning up the clues
 	text = str(clue_text)
 	var chars_to_replace = [",", "[", "]"]
 	for x in chars_to_replace:
 		text = text.replace(x, "")
 	
+	clue.add_theme_font_override("font", pixel_font)
+	
+	# Setting the color
 	if text == "0":
 		clue.add_theme_color_override("font_color", Color("#44664ac8"))
 	else:
 		clue.add_theme_color_override("font_color", Color("#d7e9d8"))
 	clue.add_theme_font_size_override("font_size", 20)
 	
+	# Aligning the clues properly
 	if clue_type == "row":
+		clue.text = text
+		clue.custom_minimum_size.x = 70
 		clue.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		clue.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		clue.text = text
-		clue.position = Vector2(grid.position.x - 40, grid.position.y + (pos * 42) + 6)
+	
+		clue.position = Vector2(grid.position.x - 83, grid.position.y + (pos * 42) + 6)
 	elif clue_type == "column":
+		clue.custom_minimum_size = Vector2(42, 150)
 		clue.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		clue.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 		clue.text = text.replace(" ", "\n")
-		clue.position = Vector2(grid.position.x + (pos * 42) + 15, grid.position.y - 92)	
+		clue.position = Vector2(grid.position.x + (pos * 42), grid.position.y - 157)	
 	return clue
 
 func _on_button_left_pressed(button: TextureButton):

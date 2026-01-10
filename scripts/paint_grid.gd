@@ -18,6 +18,8 @@ var color_squares: Array
 var current_color: Color
 var current_number: int
 
+var pixel_font = preload("res://assets/Tiny5-Regular.ttf")
+
 signal paint_by_number_solved
 
 # Called when the node enters the scene tree for the first time.
@@ -126,6 +128,7 @@ func create_number(row: int, column: int):
 	number.text = str(paint_clues[row][column] + 1)
 	number.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	number.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	number.add_theme_font_override("font", pixel_font)
 	number.add_theme_color_override("font_color", Color("44664ac8"))
 	number.add_theme_font_size_override("font_size", 22)
 	number.custom_minimum_size = Vector2(42, 42)
@@ -172,6 +175,7 @@ func create_color_button(index: int):
 	color_number.text = str(index + 1)
 	color_number.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	color_number.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	color_number.add_theme_font_override("font", pixel_font)
 	color_number.add_theme_color_override("font_color", Color("BLACK"))
 	color_number.add_theme_font_size_override("font_size", 22)
 	color_number.custom_minimum_size = Vector2(42, 42)
