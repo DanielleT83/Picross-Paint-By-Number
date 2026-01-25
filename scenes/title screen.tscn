@@ -5,7 +5,7 @@
 [ext_resource type="Texture2D" uid="uid://b7spfbaje32j1" path="res://assets/Start Button.png" id="2_olc8q"]
 [ext_resource type="Texture2D" uid="uid://bty2uu1xa4woy" path="res://assets/start_button_press.png" id="4_x3emf"]
 [ext_resource type="Texture2D" uid="uid://30bsbg00l4oj" path="res://assets/start_button_hover.png" id="5_tkrqk"]
-[ext_resource type="Texture2D" path="res://assets/Picross Logo.png" id="7_h45lw"]
+[ext_resource type="Texture2D" uid="uid://cs7c6ok4x8va8" path="res://assets/Logo.png" id="6_tkrqk"]
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
@@ -64,6 +64,6 @@ offset_right = 428.0
 offset_bottom = 214.27997
 grow_horizontal = 2
 grow_vertical = 2
-texture = ExtResource("7_h45lw")
+texture = ExtResource("6_tkrqk")
 
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]

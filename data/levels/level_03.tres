@@ -1,8 +1,7 @@
 [gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3 uid="uid://u5raksh4gr1m"]
 
 [ext_resource type="Script" uid="uid://h40x1ivvvgld" path="res://data/level_data.gd" id="1_vr7sb"]
-[ext_resource type="Texture2D" uid="uid://bohjtyjcvv2r3" path="res://assets/completed_3.png" id="2_q8pf3"]
-
+[ext_resource type="Texture2D" uid="uid://bw7f5nfch84ay" path="res://assets/Completed_3.png" id="2_q8pf3"]
 
 [resource]
 script = ExtResource("1_vr7sb")
@@ -15,5 +14,4 @@ paint_clues = [[5, 3, 3, 4, 4, 3, 5, 1, 4, 5], [0, 5, 4, 3, 3, 4, 0, 0, 1, 3], [
 colors = [Color(0.33381334, 0.64221585, 0.8847841, 1), Color(0.29385826, 0.51660234, 0.9071085, 1), Color(0.5577279, 0.827829, 0.9479514, 1), Color(0.4358143, 0.3771116, 0.277885, 1), Color(0.27299333, 0.5190528, 0.31987253, 1), Color(0.3110468, 0.24755523, 0.21793035, 1)]
 title = "waterfall"
 solved_image = ExtResource("2_q8pf3")
-
 metadata/_custom_type_script = "uid://h40x1ivvvgld"
