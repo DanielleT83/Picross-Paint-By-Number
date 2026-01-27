@@ -1,6 +1,7 @@
-[gd_resource type="Resource" script_class="LevelData" load_steps=2 format=3 uid="uid://dyh6n04dt2gyw"]
+[gd_resource type="Resource" script_class="LevelData" load_steps=3 format=3 uid="uid://dyh6n04dt2gyw"]
 
 [ext_resource type="Script" uid="uid://h40x1ivvvgld" path="res://data/level_data.gd" id="1_ckegl"]
+[ext_resource type="Texture2D" uid="uid://cuopmq5pec2mp" path="res://assets/Completed_6.png" id="2_vmc6h"]
 
 [resource]
 script = ExtResource("1_ckegl")
@@ -12,4 +13,5 @@ column_clues = [[2, 1], [2, 2, 1], [3, 3, 1], [7], [7], [7], [6, 1], [8], [4, 4]
 paint_clues = [[4, 4, 4, 1, 3, 4, 4, 4, 4, 0], [1, 1, 4, 4, 1, 3, 4, 4, 0, 4], [1, 3, 2, 4, 1, 3, 2, 4, 0, 4], [4, 1, 3, 3, 1, 3, 2, 0, 4, 4], [4, 4, 1, 3, 3, 2, 0, 2, 0, 4], [4, 4, 4, 1, 3, 0, 2, 2, 2, 0], [4, 1, 1, 3, 0, 2, 2, 4, 4, 0], [1, 1, 2, 0, 3, 2, 2, 0, 4, 4], [1, 3, 3, 2, 4, 3, 2, 0, 0, 4], [1, 3, 2, 4, 4, 4, 2, 2, 0, 4]]
 colors = [Color(0.42135352, 0.113449596, 0.10615832, 1), Color(0.7419217, 0.4444914, 0.25164708, 1), Color(0.70969254, 0.25303397, 0.21236518, 1), Color(0.7591843, 0.3466245, 0.20621964, 1), Color(0.1615898, 0.13114154, 0.019245418, 1)]
 title = "maple leaf"
+solved_image = ExtResource("2_vmc6h")
 metadata/_custom_type_script = "uid://h40x1ivvvgld"
