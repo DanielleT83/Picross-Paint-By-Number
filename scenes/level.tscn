@@ -1,13 +1,21 @@
-[gd_scene load_steps=9 format=3 uid="uid://kh15p3a41mmw"]
+[gd_scene load_steps=17 format=3 uid="uid://kh15p3a41mmw"]
 
 [ext_resource type="Texture2D" uid="uid://bo572ijbp60tu" path="res://assets/background TEMP.png" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://cdni4h8a1pre5" path="res://scripts/level.gd" id="1_w8frs"]
 [ext_resource type="PackedScene" uid="uid://bgvo32mjppvey" path="res://scenes/Grid.tscn" id="2_w7c3h"]
-[ext_resource type="Texture2D" uid="uid://k76tnsuam5la" path="res://icon.svg" id="4_mx8sn"]
 [ext_resource type="Texture2D" uid="uid://b7spfbaje32j1" path="res://assets/Start Button.png" id="5_2r41h"]
 [ext_resource type="FontFile" uid="uid://djdkq218xr7k6" path="res://assets/Tiny5-Regular.ttf" id="6_b121j"]
-[ext_resource type="Texture2D" uid="uid://cpdf4lytixtkm" path="res://assets/tile_x.png" id="6_klq6b"]
+[ext_resource type="Texture2D" uid="uid://co7p80pw7awmc" path="res://assets/back_arrow_button.png" id="6_fpun6"]
 [ext_resource type="PackedScene" uid="uid://btnljqu8yvupo" path="res://scenes/paint grid.tscn" id="7_klq6b"]
+[ext_resource type="Texture2D" uid="uid://bud4a1hx15uv0" path="res://assets/back_arrow_button_hover.png" id="7_wc255"]
+[ext_resource type="Texture2D" uid="uid://bnvskrcjkanof" path="res://assets/yes_button.png" id="8_arp2o"]
+[ext_resource type="Texture2D" uid="uid://c7nbvbqwxd84" path="res://assets/yes_button_press.png" id="9_ux5qa"]
+[ext_resource type="Texture2D" uid="uid://bs5ly3avy8ech" path="res://assets/yes_button_hover.png" id="10_82cfe"]
+[ext_resource type="Texture2D" uid="uid://ccdob0mtmrkoe" path="res://assets/no_button.png" id="11_gunhw"]
+[ext_resource type="Texture2D" uid="uid://034yw372ims" path="res://assets/no_button_press.png" id="12_8gofh"]
+[ext_resource type="Texture2D" uid="uid://bapco7ay4mt7t" path="res://assets/no_button_hover.png" id="13_h6wmr"]
+[ext_resource type="Texture2D" uid="uid://bty2uu1xa4woy" path="res://assets/start_button_press.png" id="15_arp2o"]
+[ext_resource type="Texture2D" uid="uid://30bsbg00l4oj" path="res://assets/start_button_hover.png" id="16_ux5qa"]
 
 [node name="Level" type="Control"]
 layout_mode = 3
@@ -80,28 +88,30 @@ layout_mode = 1
 layout_mode = 0
 offset_left = 25.0
 offset_top = 25.0
-offset_right = 153.0
-offset_bottom = 153.0
-texture_normal = ExtResource("4_mx8sn")
+offset_right = 129.0
+offset_bottom = 129.0
+texture_normal = ExtResource("6_fpun6")
+texture_pressed = ExtResource("6_fpun6")
+texture_hover = ExtResource("7_wc255")
 
 [node name="ConfirmScreen" type="ColorRect" parent="."]
 visible = false
 layout_mode = 0
 offset_right = 1920.0
 offset_bottom = 1080.0
-color = Color(0, 0, 0, 0.49803922)
+color = Color(0, 0, 0, 0.7372549)
 
 [node name="Label" type="Label" parent="ConfirmScreen"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.39000002
+anchor_top = 0.42600003
 anchor_right = 0.5
-anchor_bottom = 0.39000002
-offset_left = -20.0
-offset_top = -10.200012
-offset_right = 20.0
-offset_bottom = 12.799988
+anchor_bottom = 0.42600003
+offset_left = -848.0
+offset_top = -28.080017
+offset_right = 848.0
+offset_bottom = 28.919983
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.84313726, 0.9137255, 0.84705883, 1)
@@ -111,20 +121,38 @@ text = "Exiting the puzzle will cause all puzzle progress to be lost. Do you wan
 horizontal_alignment = 1
 
 [node name="ProceedButton" type="TextureButton" parent="ConfirmScreen"]
-layout_mode = 0
-offset_left = 651.0
-offset_top = 575.0
-offset_right = 959.0
-offset_bottom = 725.0
-texture_normal = ExtResource("5_2r41h")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.41700003
+anchor_top = 0.656
+anchor_right = 0.41700003
+anchor_bottom = 0.656
+offset_left = -52.640076
+offset_top = -52.48004
+offset_right = 51.359924
+offset_bottom = 51.51996
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("8_arp2o")
+texture_pressed = ExtResource("9_ux5qa")
+texture_hover = ExtResource("10_82cfe")
 
 [node name="CancelButton" type="TextureButton" parent="ConfirmScreen"]
-layout_mode = 0
-offset_left = 1158.0
-offset_top = 619.0
-offset_right = 1200.0
-offset_bottom = 661.0
-texture_normal = ExtResource("6_klq6b")
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.583
+anchor_top = 0.656
+anchor_right = 0.583
+anchor_bottom = 0.656
+offset_left = -51.359985
+offset_top = -52.48004
+offset_right = 52.640015
+offset_bottom = 51.51996
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("11_gunhw")
+texture_pressed = ExtResource("12_8gofh")
+texture_hover = ExtResource("13_h6wmr")
 stretch_mode = 1
 
 [node name="SolvedLabel" type="Label" parent="."]
@@ -134,15 +162,15 @@ anchor_left = 0.5
 anchor_top = 0.13900001
 anchor_right = 0.5
 anchor_bottom = 0.13900001
-offset_left = -240.0
-offset_top = -32.12001
-offset_right = 240.0
-offset_bottom = 32.87999
+offset_left = -256.0
+offset_top = 9.87999
+offset_right = 256.0
+offset_bottom = 83.87999
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.84313726, 0.9137255, 0.84705883, 1)
 theme_override_fonts/font = ExtResource("6_b121j")
-theme_override_font_sizes/font_size = 47
+theme_override_font_sizes/font_size = 65
 text = "Puzzle Completed!"
 horizontal_alignment = 1
 
@@ -154,14 +182,14 @@ anchor_top = 0.77000004
 anchor_right = 0.5
 anchor_bottom = 0.77000004
 offset_left = -352.0
-offset_top = -38.600037
+offset_top = -41.600037
 offset_right = 352.0
-offset_bottom = 39.399963
+offset_bottom = 36.399963
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_colors/font_color = Color(0.84313726, 0.9137255, 0.84705883, 1)
 theme_override_fonts/font = ExtResource("6_b121j")
-theme_override_font_sizes/font_size = 35
+theme_override_font_sizes/font_size = 55
 horizontal_alignment = 1
 
 [node name="ContinueButton" type="TextureButton" parent="."]
@@ -178,6 +206,8 @@ offset_bottom = 74.63995
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("5_2r41h")
+texture_pressed = ExtResource("15_arp2o")
+texture_hover = ExtResource("16_ux5qa")
 
 [node name="SolvedTimer1" type="Timer" parent="."]
 

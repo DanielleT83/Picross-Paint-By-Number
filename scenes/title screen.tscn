@@ -1,4 +1,4 @@
-[gd_scene load_steps=7 format=3 uid="uid://fupj8m67cjv5"]
+[gd_scene load_steps=11 format=3 uid="uid://fupj8m67cjv5"]
 
 [ext_resource type="Script" uid="uid://bvhjlce0r55n3" path="res://scripts/title_screen.gd" id="1_73n4j"]
 [ext_resource type="Texture2D" uid="uid://bo572ijbp60tu" path="res://assets/background TEMP.png" id="2_5hkjy"]
@@ -6,6 +6,10 @@
 [ext_resource type="Texture2D" uid="uid://bty2uu1xa4woy" path="res://assets/start_button_press.png" id="4_x3emf"]
 [ext_resource type="Texture2D" uid="uid://30bsbg00l4oj" path="res://assets/start_button_hover.png" id="5_tkrqk"]
 [ext_resource type="Texture2D" uid="uid://cs7c6ok4x8va8" path="res://assets/Logo.png" id="6_tkrqk"]
+[ext_resource type="Texture2D" uid="uid://bba13h0c01bmy" path="res://assets/tutorial_button.png" id="7_gmi5k"]
+[ext_resource type="Texture2D" uid="uid://0e5vmb71ge6m" path="res://assets/tutorial_button_press.png" id="8_jjag2"]
+[ext_resource type="Texture2D" uid="uid://biugss7yi0otl" path="res://assets/tutorial_button_hover.png" id="9_viel3"]
+[ext_resource type="FontFile" uid="uid://djdkq218xr7k6" path="res://assets/Tiny5-Regular.ttf" id="10_jjag2"]
 
 [node name="TitleScreen" type="Control"]
 layout_mode = 3
@@ -39,13 +43,13 @@ metadata/_edit_lock_ = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.725
+anchor_top = 0.67600006
 anchor_right = 0.5
-anchor_bottom = 0.725
+anchor_bottom = 0.67600006
 offset_left = -154.0
-offset_top = -75.0
+offset_top = -75.08008
 offset_right = 154.0
-offset_bottom = 75.0
+offset_bottom = 74.91992
 grow_horizontal = 2
 grow_vertical = 2
 texture_normal = ExtResource("2_olc8q")
@@ -56,15 +60,87 @@ texture_hover = ExtResource("5_tkrqk")
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5
-anchor_top = 0.33400002
+anchor_top = 0.30600002
 anchor_right = 0.5
-anchor_bottom = 0.33400002
+anchor_bottom = 0.30600002
 offset_left = -545.0
-offset_top = -268.72003
+offset_top = -268.48
 offset_right = 545.0
-offset_bottom = 269.27997
+offset_bottom = 269.52
 grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("6_tkrqk")
 
+[node name="TutorialButton" type="TextureButton" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.86200005
+anchor_right = 0.5
+anchor_bottom = 0.86200005
+offset_left = -154.0
+offset_top = -74.96002
+offset_right = 154.0
+offset_bottom = 75.03998
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("7_gmi5k")
+texture_pressed = ExtResource("8_jjag2")
+texture_hover = ExtResource("9_viel3")
+
+[node name="TutorialScreen" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1920.0
+offset_bottom = 1080.0
+color = Color(0, 0, 0, 0.8117647)
+
+[node name="Label" type="Label" parent="TutorialScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.39000002
+anchor_right = 0.5
+anchor_bottom = 0.39000002
+offset_left = -882.5
+offset_top = -336.2
+offset_right = 882.5
+offset_bottom = 380.8
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_colors/font_color = Color(0.84313726, 0.9137255, 0.84705883, 1)
+theme_override_fonts/font = ExtResource("10_jjag2")
+theme_override_font_sizes/font_size = 52
+text = "Welcome to Picross Paint-by-Number! First you must solve a picross puzzle,
+then you colour it in as a paint-by-number. 
+
+To solve a picross puzzle, fill in the grid based on the row and column clues. The
+number in each clue tells you how many squares are filled in series. For example
+the row clue [3, 4] would have three squares filled, a gap (of unkown size),
+and then four squares filled. Left click to fill a square, right click to cross it out.
+
+To colour in a paint-by-number, select a colour from the palette underneath the
+grid and then click on all of the squares with the corresponding number.
+
+Good luck!"
+horizontal_alignment = 1
+
+[node name="ProceedButton" type="TextureButton" parent="TutorialScreen"]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.86600006
+anchor_right = 0.5
+anchor_bottom = 0.86600006
+offset_left = -154.0
+offset_top = -75.28009
+offset_right = 154.0
+offset_bottom = 74.71991
+grow_horizontal = 2
+grow_vertical = 2
+texture_normal = ExtResource("2_olc8q")
+texture_pressed = ExtResource("4_x3emf")
+texture_hover = ExtResource("5_tkrqk")
+
 [connection signal="pressed" from="StartButton" to="." method="_on_start_button_pressed"]
+[connection signal="pressed" from="TutorialButton" to="." method="_on_tutorial_button_pressed"]
+[connection signal="pressed" from="TutorialScreen/ProceedButton" to="." method="_on_proceed_button_pressed"]
