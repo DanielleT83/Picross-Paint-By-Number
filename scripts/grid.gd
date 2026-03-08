@@ -24,26 +24,32 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
+# Gets the puzzle data from the resource file.
 func setup_puzzle(level_data: LevelData):
 	grid_size = level_data.grid_width
 	column_clues = level_data.column_clues
 	row_clues = level_data.row_clues
 	puzzle_solution = level_data.solution
 
+# Initializes the picross level.
 func init_game():
 	grid.columns = grid_size
 	_populate_grid()
 	
 	custom_minimum_size = Vector2(grid_size * 42, grid_size * 42)
 
+# Sets up the grid.
 func _populate_grid():
 	game_grid = []
+	
+	# Creates each button/square.
 	for i in range(grid_size):
 		var row = []
 		for x in range(grid_size):
 			row.append(create_button())
 		game_grid.append(row)
 	
+	# Creates each row and column clue.
 	for i in range(grid_size):
 		var row_clue = create_clue(row_clues[i], "row", i)
 		add_child(row_clue)
@@ -53,6 +59,7 @@ func _populate_grid():
 		add_child(column_clue)
 		column_clue_labels.append(column_clue)
 
+# Creates a button with the proper texture and connects the input.
 func create_button():
 	var button := TextureButton.new()
 	button.toggle_mode = true
@@ -67,6 +74,7 @@ func create_button():
 	grid.add_child(button)
 	return button
 
+# Creates a clue with the proper texture and data.
 func create_clue(clue_text, clue_type:String, pos:int):
 	var clue = Label.new()
 	var text: String
@@ -92,7 +100,6 @@ func create_clue(clue_text, clue_type:String, pos:int):
 		clue.custom_minimum_size.x = 70
 		clue.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT
 		clue.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	
 		clue.position = Vector2(grid.position.x - 83, grid.position.y + (pos * 42) + 6)
 	elif clue_type == "column":
 		clue.custom_minimum_size = Vector2(42, 150)
@@ -100,8 +107,10 @@ func create_clue(clue_text, clue_type:String, pos:int):
 		clue.vertical_alignment = VERTICAL_ALIGNMENT_BOTTOM
 		clue.text = text.replace(" ", "\n")
 		clue.position = Vector2(grid.position.x + (pos * 42), grid.position.y - 157)	
+	
 	return clue
 
+# If a button is left clicked.
 func _on_button_left_pressed(button: TextureButton):
 	if button.button_pressed:
 		button.texture_pressed = preload("res://assets/tile_filled.png")
@@ -111,6 +120,7 @@ func _on_button_left_pressed(button: TextureButton):
 	
 	check_puzzle()
 
+# If a button is right clicked.
 func _on_button_gui_input(event: InputEvent, button: TextureButton):
 	if event is InputEventMouseButton and event.pressed:
 		if event.is_action_pressed("right_click"):
@@ -119,6 +129,7 @@ func _on_button_gui_input(event: InputEvent, button: TextureButton):
 			button.set_meta("state", CellState.MARKED)
 	check_puzzle()
 
+# Checks if the puzzle has been completed properly.
 func check_puzzle():
 	var puzzle_state = []
 	
@@ -131,12 +142,13 @@ func check_puzzle():
 				current_row.append(0)
 		puzzle_state.append(current_row)
 		
-	update_clue_colors()
+	update_clue_colours()
 	
 	if puzzle_state == puzzle_solution and picross_solved_check == false:
 		picross_solved.emit()
 		picross_solved_check = true
 
+# Used to update the clue colours if the clue has been completed.
 func get_current_clues(cell_states: Array):
 	var clues = []
 	var counter = 0
@@ -155,7 +167,8 @@ func get_current_clues(cell_states: Array):
 		
 	return clues
 
-func update_clue_colors():
+# Makes the clue colour darker if that column/row has been completed.
+func update_clue_colours():
 	# checking rows
 	for y in range(grid_size):
 		var row_states = []
@@ -183,3 +196,10 @@ func update_clue_colors():
 			column_clue_labels[x].add_theme_color_override("font_color", Color("#44664ac8"))
 		else:
 			column_clue_labels[x].add_theme_color_override("font_color", Color("#d7e9d8"))
+
+# Resets the grid if the user has cleared it in settings.
+func reset_grid():
+	for row in game_grid:
+		for button in row:
+			button.button_pressed = false
+			button.set_meta("state", CellState.EMPTY)

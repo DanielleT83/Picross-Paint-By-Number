@@ -30,12 +30,14 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
+# Gets the puzzle data from the resource file.
 func setup_puzzle(level_data: LevelData):
 	grid_size = level_data.grid_width
 	colors = level_data.colors
 	paint_clues = level_data.paint_clues
 	picross_solution = level_data.solution
 
+# Initializes the paint by number level.
 func init_game():
 	grid.columns = grid_size
 	number_grid.columns = grid_size
@@ -52,6 +54,7 @@ func init_game():
 	
 	color_squares = color_grid.get_children()
 
+# Sets up the grid.
 func _populate_grid():
 	#creating the grid squares (buttons) 
 	game_grid = []
@@ -72,6 +75,7 @@ func _populate_grid():
 	for i in range(len(colors)):
 		create_color_button(i)
 
+# Lays out the colour buttons beneath the grid.
 func layout_level():
 	var viewport_center = get_viewport_rect().size / 2
 	
@@ -88,6 +92,7 @@ func layout_level():
 	color_grid.position = bottom_grids_pos
 	color_num_grid.position = bottom_grids_pos
 
+# Creates a button in the grid.
 func create_button(row: int, column: int):
 	var button := Button.new()
 	
@@ -123,6 +128,7 @@ func create_button(row: int, column: int):
 	grid.add_child(button)
 	return button
 
+# Creates a number for a specific button corresponding to the colour.
 func create_number(row: int, column: int):
 	var number := Label.new()
 	number.text = str(paint_clues[row][column] + 1)
@@ -137,6 +143,7 @@ func create_number(row: int, column: int):
 	number_grid.add_child(number)
 	return number
 
+# Creates a button for the colour selection.
 func create_color_button(index: int):
 	var color_rect := Button.new()
 	var normal_stylebox := StyleBoxFlat.new()
@@ -186,6 +193,7 @@ func create_color_button(index: int):
 	color_grid.add_child(color_rect)
 	color_num_grid.add_child(color_number)
 
+# Change the colour of a button in the grid when selected.
 func _on_button_pressed(button: Button, row: int, column: int):
 	var current_stylebox: StyleBoxFlat = button.get_theme_stylebox("pressed")
 	current_stylebox.bg_color = current_color
@@ -201,6 +209,7 @@ func _on_button_pressed(button: Button, row: int, column: int):
 	check_paint_status(current_color, current_number)
 	check_grid()
 
+# Selects the specific colour button that has been selected.
 func _on_color_pressed(button: Button, number: int):		
 	for other_button in color_squares:
 		if other_button != button and other_button.is_pressed() == true:
@@ -227,6 +236,7 @@ func _on_color_pressed(button: Button, number: int):
 				target_button.disabled = true
 				grid_nums[index].add_theme_color_override("font_color", Color("44664ac8"))
 
+# Checks if the grid has been completely coloured in.
 func check_grid():
 	var buttons = grid.get_children()
 	var check_counter := 0
@@ -243,6 +253,7 @@ func check_grid():
 	if check_counter == (grid_size * grid_size):
 		paint_by_number_solved.emit()
 
+# Checks which colour is currently selected.
 func check_paint_status(color: Color, color_number: int):
 	var total = 0
 	var current_counter := 0

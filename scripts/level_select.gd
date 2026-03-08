@@ -6,7 +6,6 @@ extends Control
 
 enum LevelState {UNSOLVED, SOLVED}
 
-
 const grid_length = 3
 const grid_height = 2
 var levels_grid = []
@@ -31,6 +30,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
+# Initializes the grid holding all of the levels
 func init_grid():
 	grid.columns = grid_length
 	var level_select_grid = []
@@ -41,6 +41,7 @@ func init_grid():
 			row.append(create_button(Vector2(i, x)))
 		level_select_grid.append(row)
 
+# Creates a level button with the proper number and texture.
 func create_button(pos:Vector2):
 	var button = TextureButton.new()
 	button.position = pos
@@ -68,11 +69,13 @@ func create_button(pos:Vector2):
 	
 	level_num_counter += 1
 	return button
-	
+
+# Gets the proper level data and switches to the level screen when a level has been selected.
 func _on_button_pressed(level: int):
 	level -= 1
 	Global.current_level_data = levels[level]
 	get_tree().change_scene_to_file("res://scenes/level.tscn")
 
+# Returns to the title screen if the back button has been pressed.
 func _on_back_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/title screen.tscn")

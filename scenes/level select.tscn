@@ -24,9 +24,8 @@ levels = Array[ExtResource("2_o10g0")]([ExtResource("3_bj4fl"), ExtResource("4_b
 
 [node name="ColorRect" type="ColorRect" parent="."]
 layout_mode = 0
-offset_top = -7.0
 offset_right = 1920.0
-offset_bottom = 1073.0
+offset_bottom = 1080.0
 color = Color(0.07450981, 0.2, 0.10980392, 1)
 metadata/_edit_lock_ = true
 
