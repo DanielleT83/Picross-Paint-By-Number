@@ -1,11 +1,13 @@
-[gd_scene load_steps=17 format=3 uid="uid://kh15p3a41mmw"]
+[gd_scene load_steps=19 format=3 uid="uid://kh15p3a41mmw"]
 
 [ext_resource type="Texture2D" uid="uid://bo572ijbp60tu" path="res://assets/background TEMP.png" id="1_2q6dc"]
 [ext_resource type="Script" uid="uid://cdni4h8a1pre5" path="res://scripts/level.gd" id="1_w8frs"]
 [ext_resource type="PackedScene" uid="uid://bgvo32mjppvey" path="res://scenes/Grid.tscn" id="2_w7c3h"]
 [ext_resource type="Texture2D" uid="uid://b7spfbaje32j1" path="res://assets/Start Button.png" id="5_2r41h"]
+[ext_resource type="Texture2D" uid="uid://mb085hnylc6v" path="res://assets/settings_button.png" id="6_82cfe"]
 [ext_resource type="FontFile" uid="uid://djdkq218xr7k6" path="res://assets/Tiny5-Regular.ttf" id="6_b121j"]
 [ext_resource type="Texture2D" uid="uid://co7p80pw7awmc" path="res://assets/back_arrow_button.png" id="6_fpun6"]
+[ext_resource type="Texture2D" uid="uid://dg41tv57yydwo" path="res://assets/setings-button_hover.png" id="7_gunhw"]
 [ext_resource type="PackedScene" uid="uid://btnljqu8yvupo" path="res://scenes/paint grid.tscn" id="7_klq6b"]
 [ext_resource type="Texture2D" uid="uid://bud4a1hx15uv0" path="res://assets/back_arrow_button_hover.png" id="7_wc255"]
 [ext_resource type="Texture2D" uid="uid://bnvskrcjkanof" path="res://assets/yes_button.png" id="8_arp2o"]
@@ -90,9 +92,9 @@ offset_left = 1791.0
 offset_top = 27.0
 offset_right = 1895.0
 offset_bottom = 131.0
-texture_normal = ExtResource("6_fpun6")
-texture_pressed = ExtResource("6_fpun6")
-texture_hover = ExtResource("7_wc255")
+texture_normal = ExtResource("6_82cfe")
+texture_pressed = ExtResource("7_gunhw")
+texture_hover = ExtResource("7_gunhw")
 
 [node name="SettingsScreen" type="ColorRect" parent="."]
 visible = false

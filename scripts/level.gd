@@ -96,3 +96,5 @@ func _on_settings_button_pressed() -> void:
 # Clears/resets the picross puzzle.
 func _on_clear_button_pressed() -> void:
 	grid.reset_grid()
+	$SettingsScreen.hide()
+	$SettingsButton.show()
