@@ -26,15 +26,17 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	pass
 
-# Called when the back button is pressed --> goes back to level select if on the puzzle, goes back to the puzzle if in settings.
+# Called when the back button is pressed --> goes back to level select if on the puzzle, goes back
+# to the puzzle if in settings, goes back to settings if in credits.
 func _on_texture_button_pressed() -> void:
-	if !$SettingsScreen.is_visible():
-		$ConfirmScreen.show()
-	elif $SettingsScreen.is_visible():
+	if $SettingsScreen.is_visible():
 		$SettingsScreen.hide()
-		$SettingsScreen/ClearLabel.hide()
-		$SettingsScreen/ClearButton.hide()
-		
+	elif $CreditsScreen.is_visible():
+		$CreditsScreen.hide()
+		$SettingsScreen.show()
+	else:
+		$ConfirmScreen.show()
+
 # Confirms that the user wants to exit the puzzle to level select.
 func _on_proceed_button_pressed() -> void:
 	get_tree().change_scene_to_file("res://scenes/level select.tscn")
@@ -45,7 +47,7 @@ func _on_cancel_button_pressed() -> void:
 
 # Updates the puzzle timer each second that the user is on the puzzle.
 func _on_timer_timeout() -> void:
-	if $ConfirmScreen.is_visible_in_tree() == false and level_status != 'done' and $SettingsScreen.is_visible_in_tree() == false:
+	if $ConfirmScreen.is_visible_in_tree() == false and level_status != 'done' and $SettingsScreen.is_visible_in_tree() == false and $CreditsScreen.is_visible_in_tree() == false:
 		timer += 1
 		var x = int(timer / 60.0)
 		var y = timer - x * 60
@@ -89,15 +91,18 @@ func _on_solved_timer_2_timeout() -> void:
 # Shows the settings screen.
 func _on_settings_button_pressed() -> void:
 	$SettingsScreen.show()
-	$SettingsScreen/ClearLabel.show()
-	$SettingsScreen/ClearButton.show()
 	if grid.is_visible_in_tree() == true:
-		$SettingsScreen/ClearButton.disabled = false
+		$SettingsScreen/ClearLabel/ClearButton.disabled = false
 	else:
-		$SettingsScreen/ClearButton.disabled = true
+		$SettingsScreen/ClearLabel/ClearButton.disabled = true
 
 # Clears/resets the picross puzzle.
 func _on_clear_button_pressed() -> void:
 	grid.reset_grid()
 	$SettingsScreen.hide()
 	$SettingsButton.show()
+
+# Shows the game's credits.
+func _on_credits_button_pressed() -> void:
+	$SettingsScreen.hide()
+	$CreditsScreen.show()
