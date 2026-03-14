@@ -89,9 +89,12 @@ func _on_solved_timer_2_timeout() -> void:
 # Shows the settings screen.
 func _on_settings_button_pressed() -> void:
 	$SettingsScreen.show()
+	$SettingsScreen/ClearLabel.show()
+	$SettingsScreen/ClearButton.show()
 	if grid.is_visible_in_tree() == true:
-		$SettingsScreen/ClearLabel.show()
-		$SettingsScreen/ClearButton.show()
+		$SettingsScreen/ClearButton.disabled = false
+	else:
+		$SettingsScreen/ClearButton.disabled = true
 
 # Clears/resets the picross puzzle.
 func _on_clear_button_pressed() -> void:
